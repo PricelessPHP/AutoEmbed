@@ -1,4 +1,4 @@
-OEmbed
+AutoEmbed
 ======
 
 An OEmbed Consumer written in PHP &mdash; borrowed from WordPress<br>
