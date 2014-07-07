@@ -11,6 +11,5 @@ http://www.warpconduit.net/2013/04/13/automatically-embedding-video-using-only-t
 https://gist.github.com/joshhartman/5380593
 <br><br>
 WordPress:  
-<br>
 https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-embed.php<br>
 https://github.com/WordPress/WordPress/blob/master/wp-includes/class-oembed.php
