@@ -2,7 +2,7 @@ OEmbed
 ======
 
 OEmbed for PHP &mdash; borrowed from WordPress<br>
-License:  GPL v3<br>
+License:  GPL v3<br><br>
 Credits: 
 <br><br>
 Josh Hartman: 
