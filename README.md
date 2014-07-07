@@ -1,7 +1,7 @@
 OEmbed
 ======
 
-OEmbed for PHP &mdash; borrowed from WordPress<br>
+An OEmbed Consumer written in PHP &mdash; borrowed from WordPress<br>
 License:  GPL v3<br><br>
 Credits: 
 <br><br>
