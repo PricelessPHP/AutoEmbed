@@ -4,8 +4,8 @@
  * Ripped from WordPress 3.5 for use in other PHP projects.
  * 
  * Usage:
- * $OEmbed = new OEmbed(); 
- * $content = $OEmbed->parse($content);
+ * $AutoEmbed = new AutoEmbed(); 
+ * $content = $AutoEmbed->parse($content);
  * echo $content;
  *
  * @link 	http://oembed.com/ oEmbed Homepage
@@ -15,7 +15,7 @@
  * @package OEmbed
 */
 
-class OEmbed 
+class AutoEmbed 
 {
     // List out some popular sites that support oEmbed.
     var $providers = array(
