@@ -3,9 +3,10 @@
  * Class to parse URLs & embed remote content vie oEmbed
  * Borrowed heavily from WordPress. Thanks!
  *
- * @link 	http://oembed.com/ oEmbed Homepage
+ * @link 	http://oembed.com
  * @link	https://gist.github.com/joshhartman/5380593
  * @link	http://www.warpconduit.net/2013/04/13/automatically-embedding-video-using-only-the-url-with-the-help-of-oembed
+ * @link	https://github.com/MarQuisKnox/AutoEmbed
  * 
  * @example
  * 
@@ -18,7 +19,7 @@
 
 class AutoEmbed 
 {
-	public $embedHeight = 480;
+	public $embedHeight	= 480;
 	public $embedWidth	= 853;
 	
     public $providers = array(
@@ -26,7 +27,7 @@ class AutoEmbed
             '#https://(www\.)?youtube\.com/watch.*#i' 				=> array( 'http://www.youtube.com/oembed?scheme=https', true ),
             '#http://(www\.)?youtube\.com/playlist.*#i' 			=> array( 'http://www.youtube.com/oembed', true ),
             '#https://(www\.)?youtube\.com/playlist.*#i' 			=> array( 'http://www.youtube.com/oembed?scheme=https', true ),
-            '#http://youtu\.be/.*#i' 								=> array( 'http://www.youtube.com/oembed', true ),
+            '#http://youtu\.be/.*#i'								=> array( 'http://www.youtube.com/oembed', true ),
             '#https://youtu\.be/.*#i' 								=> array( 'http://www.youtube.com/oembed?scheme=https', true ),
             'http://blip.tv/*' 										=> array( 'http://blip.tv/oembed/', false ),
             '#https?://(.+\.)?vimeo\.com/.*#i' 						=> array( 'http://vimeo.com/api/oembed.{format}', true ),
