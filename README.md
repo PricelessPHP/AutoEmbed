@@ -2,10 +2,12 @@ AutoEmbed
 ======
 
 An OEmbed Consumer written in PHP &mdash; borrowed from WordPress<br>
-##License:  
-GPL v3<br><br>
+##License: 
+<ul>
+<li>GPL v3</li>
+</ul>
+
 ##Credits: 
-<br><br>
 Josh Hartman: 
 <br>
 <ul>
