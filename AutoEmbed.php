@@ -183,7 +183,7 @@ class AutoEmbed
 
                     if ( $tagfound && preg_match_all( '/<link([^<>]+)>/i', $html, $links ) ) {
                             foreach ( $links[1] as $link ) {
-                                    $atts = $this->parse_atts( $link );
+                                    $atts = $this->shortcode_parse_atts( $link );
 
                                     if ( !empty($atts['type']) && !empty($linktypes[$atts['type']]) && !empty($atts['href']) ) {
                                             $providers[$linktypes[$atts['type']]] = $atts['href'];
