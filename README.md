@@ -7,9 +7,13 @@ Credits:
 <br><br>
 Josh Hartman: 
 <br>
-http://www.warpconduit.net/2013/04/13/automatically-embedding-video-using-only-the-url-with-the-help-of-oembed<br>
-https://gist.github.com/joshhartman/5380593
+<ul>
+<li>http://www.warpconduit.net/2013/04/13/automatically-embedding-video-using-only-the-url-with-the-help-of-oembed</li>
+<li>https://gist.github.com/joshhartman/5380593</li>
+</ul>
 <br><br>
 WordPress:  
-https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-embed.php<br>
-https://github.com/WordPress/WordPress/blob/master/wp-includes/class-oembed.php
+<ul>
+<li>https://github.com/WordPress/WordPress/blob/master/wp-includes/class-wp-embed.php</li>
+<li>https://github.com/WordPress/WordPress/blob/master/wp-includes/class-oembed.php</li>
+</ul>
