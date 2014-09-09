@@ -4,9 +4,10 @@ AutoEmbed
 An OEmbed Consumer written in PHP &mdash; borrowed from WordPress<br>
 ##License: 
 <ul>
+<br>
 <li>GPL v3</li>
 </ul>
-
+<br>
 ##Credits: 
 Josh Hartman: 
 <br>
