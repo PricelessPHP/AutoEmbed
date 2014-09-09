@@ -5,7 +5,6 @@ An OEmbed Consumer written in PHP &mdash; borrowed from WordPress
 <br><br>
 ##License: 
 <ul>
-<br><br>
 <li>GPL v3</li>
 </ul>
 <br>
