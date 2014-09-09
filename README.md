@@ -1,7 +1,7 @@
 AutoEmbed
 ======
 
-An OEmbed Consumer written in PHP &mdash; borrowed from WordPress
+An OEmbed Consumer written in PHP &mdash; <i>borrowed</i> from WordPress
 <br><br>
 ##License: 
 <ul>
