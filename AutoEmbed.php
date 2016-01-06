@@ -10,8 +10,8 @@
  * 
  * @example
  * 
- * $AutoEmbed	= new AutoEmbed(); 
- * $content		= $autoembed->parse($content);
+ * $AutoEmbed = new AutoEmbed(); 
+ * $content = $Autoembed->parse($content);
  * echo $content;
  * 
  * @package AutoEmbed
