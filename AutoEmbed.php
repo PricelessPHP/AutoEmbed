@@ -10,8 +10,8 @@
  * 
  * @example
  * 
- * $AutoEmbed = new AutoEmbed(); 
- * $content = $AutoEmbed->parse( $content );
+ * $AutoEmbed	= new AutoEmbed(); 
+ * $content		= $autoembed->parse($content);
  * echo $content;
  * 
  * @package AutoEmbed
@@ -48,7 +48,7 @@ class AutoEmbed
             '#https?://(www\.)?twitter\.com/.+?/status(es)?/.*#i'	=> array( 'https://api.twitter.com/1/statuses/oembed.{format}', true ),
             '#https?://(www\.)?soundcloud\.com/.*#i'				=> array( 'http://soundcloud.com/oembed', true ),
             '#https?://(www\.)?slideshare\.net/.*#i'				=> array( 'https://www.slideshare.net/api/oembed/2', true ),
-            '#http://instagr(\.am|am\.com)/p/.*#i'					=> array( 'http://api.instagram.com/oembed', true ),
+            '#https?://(www\.)?instagr(\.am|am\.com)/p/.*#i'        => array( 'http://api.instagram.com/oembed?url=', true ),
             '#https?://(www\.)?rdio\.com/.*#i'						=> array( 'http://www.rdio.com/api/oembed/', true ),
             '#https?://rd\.io/x/.*#i'								=> array( 'http://www.rdio.com/api/oembed/', true ),
             '#https?://(open|play)\.spotify\.com/.*#i'				=> array( 'https://embed.spotify.com/oembed/', true ),
@@ -98,7 +98,7 @@ class AutoEmbed
      * @param	boolean	$autoDiscover
      * @return	string	The embed HTML on success, otherwise the original URL.
     */
-    public function autoembed_callback( $match, $autoDiscover = false ) 
+    public function autoembed_callback( $match, $autoDiscover = false )
     {
     	$params				= array();
         $params['discover']	= $autoDiscover;
@@ -123,7 +123,11 @@ class AutoEmbed
         	$args['discover'] = false;
         }                    
 
+        $i = 0;
+
         foreach ( $this->providers AS $matchmask => $data ) {
+            $i++;
+
         	list( $providerurl, $regex ) = $data;
 
             // Turn the asterisk-type provider URLs into regex
@@ -134,6 +138,7 @@ class AutoEmbed
 
 			if ( preg_match( $matchmask, $url ) ) {
             	$provider = str_replace( '{format}', 'json', $providerurl ); // JSON is easier to deal with than XML
+
                 break;
             }
 		}
@@ -164,9 +169,9 @@ class AutoEmbed
 
                     // <link> types that contain oEmbed provider URLs
                     $linktypes = array(
-                            'application/json+oembed' => 'json',
-                            'text/xml+oembed' => 'xml',
-                            'application/xml+oembed' => 'xml', // Incorrect, but used by at least Vimeo
+                        'application/json+oembed' => 'json',
+                        'text/xml+oembed' => 'xml',
+                        'application/xml+oembed' => 'xml', // Incorrect, but used by at least Vimeo
                     );
 
                     // Strip <body>
@@ -224,7 +229,8 @@ class AutoEmbed
 		$provider = $this->add_query_arg( 'url', $url, $provider );
 
 		foreach( array( 'json', 'xml' ) AS $format ) {
-			$result = $this->_fetch_with_format( $provider, $format );			
+			$result = $this->_fetch_with_format( $provider, $format );
+
 			return $result;
 		}
             
@@ -240,11 +246,15 @@ class AutoEmbed
     */
     private function _fetch_with_format( $provider_url_with_args, $format ) 
     {
-            $provider_url_with_args = $this->add_query_arg( 'format', $format, $provider_url_with_args );
-            if ( ! $body = $this->my_remote_get( $provider_url_with_args ) )
-                    return false;
-            $parse_method = "_parse_$format";
-            return $this->$parse_method( $body );
+        $provider_url_with_args = $this->add_query_arg( 'format', $format, $provider_url_with_args );
+
+        if ( !$body = $this->my_remote_get( $provider_url_with_args ) ) {
+            return false;
+        }
+
+        $parse_method = "_parse_$format";
+
+        return $this->$parse_method( $body );
     }
 
     /**
@@ -253,7 +263,7 @@ class AutoEmbed
     */
     private function _parse_json( $response_body ) 
     {
-            return ( ( $data = json_decode( trim( $response_body ) ) ) && is_object( $data ) ) ? $data : false;
+        return ( ( $data = json_decode( trim( $response_body ) ) ) && is_object( $data ) ) ? $data : false;
     }
 
     /**
@@ -304,10 +314,11 @@ class AutoEmbed
      * @param string $url The URL to the content that is desired to be embedded.
      * @return bool|string False on error, otherwise the HTML needed to embed.
     */
-    public function data2html( $data, $url ) 
+    public function data2html( $data, $url, $responsive = true ) 
     {
-            if ( ! is_object( $data ) || empty( $data->type ) )
-                    return false;
+            if ( !is_object( $data ) || empty( $data->type ) ) {
+                return false;
+            }
 
             $return = false;
 
@@ -341,29 +352,38 @@ class AutoEmbed
             if ( false !== strpos( $return, "\n" ) )
                     $return = str_replace( array( "\r\n", "\n" ), '', $return );
 
+            if( $responsive ) {
+                $return = $this->makeEmbedResponsive( $return );
+            }
+            
             return $return;
     }
     
     /**
      * Grabs the response from a remote URL.
      *
-     * @param string $url The remote URL.
-     * @return bool|string False on error, otherwise the response body.
+     * @param   string  $url            The remote URL.
+     * @param   boolean $followLocation CURL_FOLLOWLOCATION
+     * @return  bool|string False on error, otherwise the response body.
     */
-    public function my_remote_get( $url ) 
+    public function my_remote_get( $url, $followLocation = true )
     {
         $handle = curl_init();
+
         curl_setopt( $handle, CURLOPT_CONNECTTIMEOUT, 5 );
         curl_setopt( $handle, CURLOPT_TIMEOUT, 5 );
         curl_setopt( $handle, CURLOPT_URL, $url);
         curl_setopt( $handle, CURLOPT_RETURNTRANSFER, true );
         curl_setopt( $handle, CURLOPT_SSL_VERIFYHOST, false );
         curl_setopt( $handle, CURLOPT_SSL_VERIFYPEER, false );
-        curl_setopt( $handle, CURLOPT_FOLLOWLOCATION, false );
+        curl_setopt( $handle, CURLOPT_FOLLOWLOCATION, $followLocation );
         curl_setopt( $handle, CURLOPT_HEADER, false );
         curl_setopt( $handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0 );
+
         $response = curl_exec( $handle );
+
         curl_close( $handle );
+
         return $response;
     }
 
@@ -526,5 +546,23 @@ class AutoEmbed
             }
             return $atts;
     }
-        
+
+    
+    /**
+     * Make an embed responsive
+     *
+     * @param   string  $string
+     * @param   string  $targetWidth
+     * @return  string
+    */
+    public function makeEmbedResponsive( $string, $targetWidth = '100%' )
+    {
+        $string = preg_replace(
+            array( '/width="\d+"/i' ),
+            array( sprintf( 'width="%s"', $targetWidth ) ),
+            $string
+        );
+    
+        return $string;
+    }    
 }
