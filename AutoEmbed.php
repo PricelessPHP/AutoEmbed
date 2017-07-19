@@ -11,7 +11,7 @@
  * @example
  * 
  * $AutoEmbed	= new AutoEmbed(); 
- * $content		= $autoembed->parse($content);
+ * $content	= $Autoembed->parse($content);
  * echo $content;
  * 
  * @package AutoEmbed
