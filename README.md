@@ -9,7 +9,7 @@ An OEmbed Consumer written in PHP &mdash; <i>borrowed</i> from WordPress
         <a href="http://www.gnu.org/licenses/gpl-3.0.txt" target="_blank">GPL v3</a>
     </li>
 </ul>
-<br>
+
 ## Credits: 
 <ol>
     <li><a href="https://github.com/MarQuisKnox">MarQuis Knox</a></li>
