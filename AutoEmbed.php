@@ -58,7 +58,18 @@ class AutoEmbed
             '#https?://(www\.)?collegehumor\.com/video/.*#i'		=> array( 'http://www.collegehumor.com/oembed.{format}', true ),
             '#https?://(www\.)?mixcloud\.com/.*#i'					=> array( 'http://www.mixcloud.com/oembed', true ),
             '#https?://(www\.|embed\.)?ted\.com/talks/.*#i'			=> array( 'http://www.ted.com/talks/oembed.{format}', true ),
-            '#https?://(www\.)?(animoto|video214)\.com/play/.*#i'	=> array( 'http://animoto.com/oembeds/create', true ),            
+            '#https?://(www\.)?(animoto|video214)\.com/play/.*#i'	=> array( 'http://animoto.com/oembeds/create', true ),
+            '#https?://www\.facebook\.com/.*/posts/.*#i'            => array( 'https://www.facebook.com/plugins/post/oembed.json/', true  ),
+            '#https?://www\.facebook\.com/.*/activity/.*#i'         => array( 'https://www.facebook.com/plugins/post/oembed.json/', true  ),
+            '#https?://www\.facebook\.com/.*/photos/.*#i'           => array( 'https://www.facebook.com/plugins/post/oembed.json/', true  ),
+            '#https?://www\.facebook\.com/photo(s/|\.php).*#i'      => array( 'https://www.facebook.com/plugins/post/oembed.json/', true  ),
+            '#https?://www\.facebook\.com/permalink\.php.*#i'       => array( 'https://www.facebook.com/plugins/post/oembed.json/', true  ),
+            '#https?://www\.facebook\.com/media/.*#i'               => array( 'https://www.facebook.com/plugins/post/oembed.json/', true  ),
+            '#https?://www\.facebook\.com/questions/.*#i'           => array( 'https://www.facebook.com/plugins/post/oembed.json/', true  ),
+            '#https?://www\.facebook\.com/notes/.*#i'               => array( 'https://www.facebook.com/plugins/post/oembed.json/', true  ),
+            '#https?://www\.facebook\.com/.*/videos/.*#i'           => array( 'https://www.facebook.com/plugins/video/oembed.json/', true  ),
+            '#https?://www\.facebook\.com/video\.php.*#i'           => array( 'https://www.facebook.com/plugins/video/oembed.json/', true  ),
+            '#https?://(www\.)?screencast\.com/.*#i'                => array( 'https://api.screencast.com/external/oembed', true  ),            
     );
     
     public function getEmbedHeight()
@@ -368,6 +379,7 @@ class AutoEmbed
     */
     public function my_remote_get( $url, $followLocation = true )
     {
+        $browser = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.16 (KHTML, like Gecko) \Chrome/24.0.1304.0 Safari/537.16';
         $handle = curl_init();
 
         curl_setopt( $handle, CURLOPT_CONNECTTIMEOUT, 5 );
@@ -379,6 +391,7 @@ class AutoEmbed
         curl_setopt( $handle, CURLOPT_FOLLOWLOCATION, $followLocation );
         curl_setopt( $handle, CURLOPT_HEADER, false );
         curl_setopt( $handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0 );
+        curl_setopt( $handle, CURLOPT_USERAGENT, $browser);
 
         $response = curl_exec( $handle );
 
